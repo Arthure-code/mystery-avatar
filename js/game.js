@@ -47,9 +47,12 @@ for (const feature of FEATURES) {
   featureBoxes.push(document.getElementById(feature));
 }
 const blueEyesRadio = document.getElementById("blueEyes");
+const btnShow = document.getElementById("btnShow");
+const btnAgain = document.getElementById("btnAgain");
 const result = document.getElementById("result");
 
 let mystery = null;
+let solved = false;
 
 const TRAIT_NAMES = { hat: "a hat", beard: "a beard", glasses: "glasses", moustache: "a moustache" };
 
@@ -83,22 +86,6 @@ function buildCharacters() {
     button.append(picture);
     item.append(button);
     charactersList.append(item);
-  }
-}
-
-function countTicked() {
-  let ticked = 0;
-  for (const box of featureBoxes) {
-    if (box.checked) ticked++;
-  }
-  return ticked;
-}
-
-// Once two boxes are ticked, the others are disabled until one is unticked.
-function limitFeatures() {
-  const ticked = countTicked();
-  for (const box of featureBoxes) {
-    box.disabled = !box.checked && ticked >= MAX_FEATURES;
   }
 }
 
@@ -142,6 +129,22 @@ function countMatchingTraits(selection) {
   return count;
 }
 
+function countTicked() {
+  let ticked = 0;
+  for (const box of featureBoxes) {
+    if (box.checked) ticked++;
+  }
+  return ticked;
+}
+
+// Once two boxes are ticked, the others are disabled until one is unticked.
+function limitFeatures() {
+  const ticked = countTicked();
+  for (const box of featureBoxes) {
+    box.disabled = !box.checked && ticked >= MAX_FEATURES;
+  }
+}
+
 function setDimmed(predicate) {
   for (const button of charactersList.querySelectorAll("button")) {
     button.classList.toggle("dimmed", predicate(button));
@@ -156,6 +159,7 @@ function characterOf(button) {
 // under the button gives the score.
 function showSelection(event) {
   event.preventDefault();
+  if (solved) return;
   const selection = readSelection();
   function doesNotMatch(button) {
     return !matches(characterOf(button), selection);
@@ -166,6 +170,42 @@ function showSelection(event) {
   result.classList.remove("win");
 }
 
+function guess(event) {
+  const button = event.target.closest("button");
+  if (!button || solved) return;
+  const character = characterOf(button);
+  if (character !== mystery) {
+    result.textContent = "Not that one. Keep looking.";
+    result.classList.remove("win");
+    return;
+  }
+  solved = true;
+  function isNotTheOne(other) {
+    return other !== button;
+  }
+  setDimmed(isNotTheOne);
+  result.textContent = "Well done! The mystery character has " + describe(character) + ".";
+  result.classList.add("win");
+  btnShow.hidden = true;
+  btnAgain.hidden = false;
+}
+
+function never() {
+  return false;
+}
+
+function playAgain() {
+  solved = false;
+  pickMystery();
+  filters.reset();
+  limitFeatures();
+  setDimmed(never);
+  result.textContent = "";
+  result.classList.remove("win");
+  btnAgain.hidden = true;
+  btnShow.hidden = false;
+}
+
 function init() {
   buildCharacters();
   pickMystery();
@@ -173,6 +213,8 @@ function init() {
     box.addEventListener("change", limitFeatures);
   }
   filters.addEventListener("submit", showSelection);
+  charactersList.addEventListener("click", guess);
+  btnAgain.addEventListener("click", playAgain);
 }
 
 init();
