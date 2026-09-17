@@ -5,6 +5,7 @@
 // Named functions only.
 "use strict";
 
+const MAX_FEATURES = 2;
 const FEATURES = ["hat", "beard", "glasses", "moustache"];
 const PICTURES_FOLDER = "images/characters/";
 
@@ -79,8 +80,27 @@ function buildCharacters() {
   }
 }
 
+function countTicked() {
+  let ticked = 0;
+  for (const box of featureBoxes) {
+    if (box.checked) ticked++;
+  }
+  return ticked;
+}
+
+// Once two boxes are ticked, the others are disabled until one is unticked.
+function limitFeatures() {
+  const ticked = countTicked();
+  for (const box of featureBoxes) {
+    box.disabled = !box.checked && ticked >= MAX_FEATURES;
+  }
+}
+
 function init() {
   buildCharacters();
+  for (const box of featureBoxes) {
+    box.addEventListener("change", limitFeatures);
+  }
 }
 
 init();
