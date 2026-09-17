@@ -72,6 +72,4 @@ personnage est lu depuis le nom de son image.
 
 ## Licence
 
-All rights reserved. The source is published to be read; no permission is
-given to use, copy, modify, distribute or build upon it. See
-[LICENSE](LICENSE).
+Apache License 2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
