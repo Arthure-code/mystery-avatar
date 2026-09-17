@@ -25,12 +25,12 @@ const PICTURES = [
 // "hat_glasses_blueeyes_beard.webp" becomes { hat: true, glasses: true, beard:
 // true, moustache: false, blueEyes: true, picture: "..." }.
 function characterFromPicture(fileName) {
-  const words = fileName.replace(".webp", "").split("_");
+  const words = new Set(fileName.replace(".webp", "").split("_"));
   const character = { picture: PICTURES_FOLDER + fileName };
   for (const feature of FEATURES) {
-    character[feature] = words.includes(feature);
+    character[feature] = words.has(feature);
   }
-  character.blueEyes = words.includes("blueeyes");
+  character.blueEyes = words.has("blueeyes");
   return character;
 }
 
@@ -65,7 +65,7 @@ function describe(character) {
   }
   traits.push(character.blueEyes ? "blue eyes" : "dark eyes");
   if (traits.length === 1) return traits[0];
-  return traits.slice(0, -1).join(", ") + " and " + traits[traits.length - 1];
+  return traits.slice(0, -1).join(", ") + " and " + traits.at(-1);
 }
 
 // One list item per character: a button holding the picture, so a face can
