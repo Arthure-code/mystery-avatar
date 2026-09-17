@@ -1,5 +1,13 @@
 # mystery-avatar
 
+[![Build](https://github.com/Arthure-code/mystery-avatar/actions/workflows/build.yml/badge.svg)](https://github.com/Arthure-code/mystery-avatar/actions/workflows/build.yml)
+[![Quality gate](https://sonarcloud.io/api/project_badges/measure?project=Arthure-code_mystery-avatar&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Arthure-code_mystery-avatar)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=Arthure-code_mystery-avatar&metric=bugs)](https://sonarcloud.io/summary/new_code?id=Arthure-code_mystery-avatar)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=Arthure-code_mystery-avatar&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=Arthure-code_mystery-avatar)
+[![Security rating](https://sonarcloud.io/api/project_badges/measure?project=Arthure-code_mystery-avatar&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=Arthure-code_mystery-avatar)
+[![Code smells](https://sonarcloud.io/api/project_badges/measure?project=Arthure-code_mystery-avatar&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=Arthure-code_mystery-avatar)
+[![Duplicated lines](https://sonarcloud.io/api/project_badges/measure?project=Arthure-code_mystery-avatar&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=Arthure-code_mystery-avatar)
+
 Twenty-eight characters, one picked in secret. Tick up to two features and
 an eye colour, show the selection to see which characters match and how
 many of the five traits you got right, then click the one you think it is.
