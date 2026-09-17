@@ -1,0 +1,284 @@
+/* The layout of the reference: the illustration on the left, the characters
+   and the controls on the right, the page 1600 px wide and centred. On a
+   narrow screen the two columns fold into one. */
+#page {
+  width: min(1600px, 100%);
+  margin: 0 auto;
+  padding: 0 16px 24px;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 33% 66%;
+}
+
+.section-logo {
+  grid-row-end: span 2;
+  align-self: center;
+}
+
+.section-logo img {
+  max-width: 100%;
+  height: auto;
+}
+
+.section-characters {
+  grid-column: 2;
+}
+
+.section-controls {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+h1 {
+  text-align: center;
+}
+
+footer {
+  margin-top: 50px;
+  text-align: center;
+}
+
+/* The list is filled by the script after the first paint; its height is
+   reserved so nothing below it moves: 4 rows of 100 px and 3 gaps of 15 px
+   on a wide screen, more rows as the width shrinks. */
+ul#characters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  max-width: 790px; /* seven faces a row at most, four rows on a wide screen */
+  min-height: 1710px;
+}
+
+@media (min-width: 380px) { ul#characters { min-height: 1135px; } }
+@media (min-width: 500px) { ul#characters { min-height: 790px; } }
+@media (min-width: 630px) { ul#characters { min-height: 675px; } }
+@media (min-width: 750px) { ul#characters { min-height: 560px; } }
+@media (min-width: 901px) { ul#characters { min-height: 905px; } }
+@media (min-width: 1000px) { ul#characters { min-height: 675px; } }
+@media (min-width: 1160px) { ul#characters { min-height: 560px; } }
+@media (min-width: 1340px) { ul#characters { min-height: 445px; } }
+
+#characters li {
+  width: 100px;
+}
+
+#characters button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+#characters button:focus-visible {
+  outline: 3px solid #4a4ad8;
+  outline-offset: 3px;
+}
+
+#characters img {
+  display: block;
+  width: 100px;
+  height: 100px;
+}
+
+#characters .dimmed {
+  opacity: 0.3;
+}
+
+.features {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.tile,
+.radio-eyes label {
+  position: relative;
+  display: block;
+  width: 100px;
+  height: 100px;
+  box-shadow: 0 0 25px rgba(17, 1, 68, 0.08);
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: rgb(195, 195, 245);
+}
+
+.tile img {
+  width: 65%;
+  height: auto;
+  border-radius: 8px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+/* The box sits in the top right corner of its tile, drawn as a ring that
+   fills when ticked; a disabled tile fades. */
+.tile input {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  margin: 0;
+  width: 14px;
+  height: 14px;
+  appearance: none;
+  border: 2px solid #1f2328;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+}
+
+.tile input:checked {
+  background: #1f2328;
+  box-shadow: inset 0 0 0 3px #fff;
+}
+
+.tile input:focus-visible,
+.radio-eyes input:focus-visible {
+  outline: 3px solid #4a4ad8;
+  outline-offset: 3px;
+}
+
+.tile:has(input:disabled) {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.tile:has(input:disabled) input {
+  cursor: not-allowed;
+}
+
+.radio-eyes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 8px;
+  border: 0;
+  border-radius: 8px;
+  background-color: rgb(195, 195, 245);
+}
+
+.radio-eyes label {
+  width: 65px;
+  height: 65px;
+  box-shadow: none;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.radio-eyes img {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  display: block;
+}
+
+.radio-eyes input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  appearance: none;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.radio-eyes input:hover {
+  border-color: blue;
+}
+
+.radio-eyes input:checked {
+  border-color: black;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.controls button {
+  font-family: Arial, sans-serif;
+  font-size: large;
+  font-weight: bold;
+  border: 2px solid #8f8fe0;
+  border-radius: 8px;
+  background-color: rgb(195, 195, 245);
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.controls button:hover {
+  background-color: #4a4ad8;
+  color: #fff;
+}
+
+#result {
+  min-height: 1.5em;
+  font-family: Arial, sans-serif;
+  font-size: large;
+  font-weight: bold;
+  color: #4a4ad8;
+  text-align: center;
+}
+
+#result.win {
+  color: #1a7f37;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  main {
+    grid-template-columns: 1fr;
+  }
+
+  .section-logo {
+    grid-row: auto;
+    text-align: center;
+  }
+
+  .section-logo img {
+    max-width: 240px;
+  }
+
+  .section-characters,
+  .section-controls {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  ul#characters {
+    justify-content: center;
+  }
+}

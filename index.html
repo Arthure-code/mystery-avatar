@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mystery Avatar: twenty-eight characters, one picked in secret. Filter them by hat, beard, glasses, moustache and eye colour, count how many traits you got right, and click the one you think it is.">
+  <title>Mystery Avatar</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="css/styles.css">
+  <script defer src="js/game.js"></script>
+</head>
+<body>
+  <div id="page">
+    <header>
+      <h1>Character selection</h1>
+    </header>
+    <main>
+      <section class="section-logo" aria-label="Illustration">
+        <img src="images/illustration.webp" alt="" width="468" height="672" fetchpriority="high">
+      </section>
+
+      <section class="section-characters" aria-labelledby="characters-title">
+        <h2 id="characters-title" class="visually-hidden">The characters</h2>
+        <ul id="characters"></ul>
+      </section>
+
+      <section class="section-controls" aria-labelledby="controls-title">
+        <h2 id="controls-title" class="visually-hidden">Filters</h2>
+        <form id="filters">
+          <div class="features">
+            <label class="tile" title="Hat">
+              <input type="checkbox" name="hat" id="hat">
+              <img src="images/hat.webp" alt="Hat" width="128" height="128">
+            </label>
+            <label class="tile" title="Beard">
+              <input type="checkbox" name="beard" id="beard">
+              <img src="images/beard.webp" alt="Beard" width="128" height="128">
+            </label>
+            <label class="tile" title="Glasses">
+              <input type="checkbox" name="glasses" id="glasses">
+              <img src="images/glasses.webp" alt="Glasses" width="128" height="128">
+            </label>
+            <fieldset class="radio-eyes">
+              <legend class="visually-hidden">Eye colour</legend>
+              <label title="Dark eyes">
+                <input type="radio" name="eyes" id="darkEyes" value="darkeyes" checked>
+                <img src="images/dark-eyes.webp" alt="Dark eyes" width="128" height="128">
+              </label>
+              <label title="Blue eyes">
+                <input type="radio" name="eyes" id="blueEyes" value="blueeyes">
+                <img src="images/blue-eyes.webp" alt="Blue eyes" width="128" height="128">
+              </label>
+            </fieldset>
+            <label class="tile" title="Moustache">
+              <input type="checkbox" name="moustache" id="moustache">
+              <img src="images/moustache.webp" alt="Moustache" width="128" height="128">
+            </label>
+          </div>
+
+          <div class="controls">
+            <button type="submit" id="btnShow">Show the selection</button>
+            <button type="button" id="btnAgain" hidden>Play again</button>
+          </div>
+          <p id="result" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2026 - Mystery Avatar - <a href="LICENSE">Licence</a></p>
+    </footer>
+  </div>
+</body>
+</html>
