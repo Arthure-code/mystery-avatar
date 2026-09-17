@@ -7,6 +7,7 @@
 
 const MAX_FEATURES = 2;
 const FEATURES = ["hat", "beard", "glasses", "moustache"];
+const TRAIT_COUNT = FEATURES.length + 1;
 const PICTURES_FOLDER = "images/characters/";
 
 // One entry per picture in the folder. The file name lists the traits of the
@@ -40,10 +41,15 @@ for (const fileName of PICTURES) {
 
 // Every element the game touches, looked up once.
 const charactersList = document.getElementById("characters");
+const filters = document.getElementById("filters");
 const featureBoxes = [];
 for (const feature of FEATURES) {
   featureBoxes.push(document.getElementById(feature));
 }
+const blueEyesRadio = document.getElementById("blueEyes");
+const result = document.getElementById("result");
+
+let mystery = null;
 
 const TRAIT_NAMES = { hat: "a hat", beard: "a beard", glasses: "glasses", moustache: "a moustache" };
 
@@ -96,11 +102,77 @@ function limitFeatures() {
   }
 }
 
+// A random index from the browser's cryptographic generator.
+function randomIndex(count) {
+  const draw = new Uint32Array(1);
+  crypto.getRandomValues(draw);
+  return draw[0] % count;
+}
+
+function pickMystery() {
+  mystery = CHARACTERS[randomIndex(CHARACTERS.length)];
+}
+
+// The selection as an object shaped like a character: the four features from
+// the boxes and the eye colour from the radios.
+function readSelection() {
+  const selection = {};
+  for (const box of featureBoxes) {
+    selection[box.id] = box.checked;
+  }
+  selection.blueEyes = blueEyesRadio.checked;
+  return selection;
+}
+
+// True when the character has exactly the selected features and eye colour.
+function matches(character, selection) {
+  for (const feature of FEATURES) {
+    if (character[feature] !== selection[feature]) return false;
+  }
+  return character.blueEyes === selection.blueEyes;
+}
+
+// How many of the five traits the selection has right about the mystery.
+function countMatchingTraits(selection) {
+  let count = 0;
+  for (const feature of FEATURES) {
+    if (mystery[feature] === selection[feature]) count++;
+  }
+  if (mystery.blueEyes === selection.blueEyes) count++;
+  return count;
+}
+
+function setDimmed(predicate) {
+  for (const button of charactersList.querySelectorAll("button")) {
+    button.classList.toggle("dimmed", predicate(button));
+  }
+}
+
+function characterOf(button) {
+  return CHARACTERS[Number(button.dataset.index)];
+}
+
+// The faces that match the selection stay bright, the others fade; the line
+// under the button gives the score.
+function showSelection(event) {
+  event.preventDefault();
+  const selection = readSelection();
+  function doesNotMatch(button) {
+    return !matches(characterOf(button), selection);
+  }
+  setDimmed(doesNotMatch);
+  const found = countMatchingTraits(selection);
+  result.textContent = "You got " + found + " of " + TRAIT_COUNT + " traits right.";
+  result.classList.remove("win");
+}
+
 function init() {
   buildCharacters();
+  pickMystery();
   for (const box of featureBoxes) {
     box.addEventListener("change", limitFeatures);
   }
+  filters.addEventListener("submit", showSelection);
 }
 
 init();
