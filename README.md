@@ -37,4 +37,6 @@ personnage est lu depuis le nom de son image.
 
 ## Licence
 
-MIT. See [LICENSE](LICENSE).
+All rights reserved. The source is published to be read; no permission is
+given to use, copy, modify, distribute or build upon it. See
+[LICENSE](LICENSE).
